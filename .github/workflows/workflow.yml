@@ -45,3 +45,21 @@ jobs:
           tags: ghcr.io/${{ github.repository_owner }}/simple-microservice:latest # Tag dell'immagine
           # Esempio: ghcr.io/tuo-username/simple-microservice:latest
           # github.repository_owner prende automaticamente il proprietario del repo (utente o organizzazione)
+
+  #####################################################################
+  # 🚢  JOB 2 – Deploy automatico su server self-hosted con Docker
+  #####################################################################
+  deploy-selfhosted:
+    needs: build-and-push # aspetta la fine del job precedente
+    runs-on: self-hosted  # gira su una macchina dove hai registrato un runner
+    steps:
+      - name: Pull latest image from GHCR
+        run: docker pull ghcr.io/${{ github.repository_owner }}/simple-microservice:latest
+
+      - name: Stop and remove old container
+        run: |
+          docker rm -f simple-microservice || true
+
+      - name: Run new container
+        run: |
+          docker run -d --name simple-microservice -p 8080:8080 ghcr.io/${{ github.repository_owner }}/simple-microservice:latest
