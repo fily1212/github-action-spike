@@ -62,4 +62,4 @@ jobs:
 
       - name: Run new container
         run: |
-          docker run -d --name simple-microservice -p 8080:8080 ghcr.io/${{ github.repository_owner }}/simple-microservice:latest
+          docker run -d --name simple-microservice -p 8060:8060 ghcr.io/${{ github.repository_owner }}/simple-microservice:latest
