@@ -24,7 +24,7 @@ jobs:
           distribution: 'temurin' # Distribuzione Temurin di OpenJDK
           cache: 'maven' # Abilita la cache per le dipendenze Maven
 
-      - name: Grant execute permission to mvnw 
+      - name: Grant execute permission to mvnw
         run: chmod +x ./mvnw
 
       - name: Build with Maven
