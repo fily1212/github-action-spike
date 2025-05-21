@@ -1,0 +1,22 @@
+name: Build and Deploy to Docker Host
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t hello-service:latest .
+
+      - name: Stop old container (if running)
+        run: |
+          docker rm -f hello-service || true
+
+      - name: Run new container
+        run: |
+          docker run -d --name hello-service -p 8080:8080 hello-service:latest
